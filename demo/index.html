@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Transfer WebView Channel 示例</title>
+        <style>
+        body {
+            padding: 20px;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+        }
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        .button-group {
+            margin: 20px 0;
+        }
+        button {
+            margin: 5px;
+            padding: 8px 16px;
+            border: none;
+            border-radius: 4px;
+            background-color: #007AFF;
+            color: white;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        #output {
+            padding: 15px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            background-color: #f8f9fa;
+            min-height: 100px;
+            margin-top: 20px;
+        }
+    </style>
+    </head>
+    <body>
+        <div class="container">
+            <h1>Transfer WebView Channel 示例</h1>
+            <div class="button-group">
+                <button id="sendBasicMessageBtn">发送基本消息并获取数据</button>
+            </div>
+            <div id="output"></div>
+        </div>
+
+        <script src="//static.himengyou.com/cloudgame/sq/js/eruda.js"></script>
+        <script>
+            eruda.init();
+        </script>
+</html>
+    </body>
+    <script type="module">
+            // 导入transfer
+            import transferWebview from '../src/index.js';
+
+            // 定义数据传输实现方法(以flutter环境为例)
+            const transferImpl = (data) => {
+                window.flutter_inappwebview.callHandler("jiuxiaoIos", data);
+            };
+
+            // 自定义数据解析方法
+            const customParser = (event) => {
+                try {
+                    let msg = null;
+                    if (!event || event.data == undefined || event.data.data == undefined) {
+                        return null;
+                    }
+                    if (event.data.data instanceof Array) {
+                        return null;
+                    }
+                    if (event.data.data != undefined) {
+                        try {
+                            msg = JSON.parse(event.data.data.replace(/\n/g, "\\n"));
+                        } catch (e) {}
+                    } else {
+                        msg = event.data;
+                    }
+                    return msg;
+                } catch (e) {
+                    console.error("Message parsing error:", e);
+                }
+            };
+            // 初始化
+            transferWebview.init(transferImpl, customParser).then(() => {
+                console.log('Transfer WebView Channel 初始化成功');
+            });
+
+            // 将函数暴露到全局作用域
+            const sendBasicMessage = async function() {
+                try {
+                    const result = await transferWebview.transferData({
+                        id: 'msg_' + Date.now(),
+                        actionType: 'getInfo',
+                        data: '',
+                        ext: ''
+                    });
+                    const resultText = `基本消息发送成功，响应：${JSON.stringify(result)}`;
+                    console.log(resultText);
+                    document.getElementById('output').textContent = resultText;
+                } catch (error) {
+                    const errorText = `发送失败：${error.message}`;
+                    console.log(errorText);
+                    document.getElementById('output').textContent = errorText;
+                }
+            };
+
+            // 发送带超时消息
+            window.sendWithTimeout = async function() {
+                try {
+                    const result = await transferWebview.transferData(
+                        {
+                            id: 'timeout_' + Date.now(),
+                            data: '这是一条带超时的消息'
+                        },
+                        true,
+                        2000
+                    );
+                    console.log(`带超时消息发送成功，响应：${result}`);
+                } catch (error) {
+                    console.log(`发送失败：${error.message}`);
+                }
+            };
+
+            // 发送无响应消息
+            window.sendWithoutResponse = async function() {
+                try {
+                    await transferWebview.transferData(
+                        {
+                            id: 'noresp_' + Date.now(),
+                            data: '这是一条无需响应的消息'
+                        },
+                        false
+                    );
+                    console.log('无响应消息发送成功');
+                } catch (error) {
+                    console.log(`发送失败：${error.message}`);
+                }
+            };
+                        document.getElementById('sendBasicMessageBtn').addEventListener('click', sendBasicMessage);
+        </script>
+</html>
