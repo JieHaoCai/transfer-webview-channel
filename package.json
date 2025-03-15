@@ -1,6 +1,6 @@
 {
   "name": "transfer-webview-channel",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "A lightweight library for handling communication between webview and native apps",
   "main": "dist/index.js",
   "module": "es/index.js",
