@@ -18,12 +18,12 @@
   ],
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/CJH/transfer-webview-channel.git"
+    "url": "git+https://github.com/JieHaoCai/transfer-webview-channel"
   },
   "bugs": {
-    "url": "https://github.com/CJH/transfer-webview-channel/issues"
+    "url": "https://github.com/JieHaoCai/transfer-webview-channel/issues"
   },
-  "homepage": "https://github.com/CJH/transfer-webview-channel#readme",
+  "homepage": "https://github.com/JieHaoCai/transfer-webview-channel#readme",
   "author": "CJH",
   "license": "ISC",
   "devDependencies": {
