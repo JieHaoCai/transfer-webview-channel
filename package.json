@@ -4,6 +4,12 @@
   "description": "A lightweight library for handling communication between webview and native apps",
   "main": "dist/index.js",
   "module": "es/index.js",
+  "exports": {
+    ".": {
+      "import": "./es/index.js",
+      "require": "./dist/index.js"
+    }
+  },
   "types": "dist/index.d.ts",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",

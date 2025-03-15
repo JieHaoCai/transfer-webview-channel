@@ -11,9 +11,15 @@ export default {
         },
         {
             file: './dist/index.js',
-            format: 'cjs',  // CommonJS，适用于 Node 和 Browserify/Webpack
+            format: 'cjs',
             exports: 'default',
-            sourcemap: true // 启用 sourcemap 生成
+            sourcemap: true
+        },
+        {
+            file: './dist/index.umd.js',
+            format: 'umd',
+            name: 'TransferWebviewChannel',
+            sourcemap: true
         }
     ],
     watch: {  // 配置监听处理
