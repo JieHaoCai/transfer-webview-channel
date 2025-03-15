@@ -2,11 +2,14 @@
   "name": "transfer-webview-channel",
   "version": "1.0.1",
   "description": "A lightweight library for handling communication between webview and native apps",
-  "main": "src/index.js",
+  "main": "dist/index.js",
+  "module": "es/index.js",
+  "types": "dist/index.d.ts",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "rollup -c",
-    "serve": "rollup -c -w"
+    "build": "tsc && rollup -c",
+    "serve": "rollup -c -w",
+    "type-check": "tsc --noEmit"
   },
   "keywords": [
     "webview",
@@ -24,11 +27,15 @@
     "url": "https://github.com/JieHaoCai/transfer-webview-channel/issues"
   },
   "homepage": "https://github.com/JieHaoCai/transfer-webview-channel#readme",
-  "author": "CJH",
+  "author": "JieHaoCai",
   "license": "ISC",
   "devDependencies": {
     "@babel/preset-env": "^7.26.9",
     "@rollup/plugin-babel": "^6.0.4",
-    "rollup": "^4.35.0"
+    "@rollup/plugin-typescript": "^11.1.6",
+    "@types/node": "^22.13.10",
+    "rollup": "^4.35.0",
+    "tslib": "^2.6.2",
+    "typescript": "^5.3.3"
   }
 }

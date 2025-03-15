@@ -51,11 +51,9 @@
         <script>
             eruda.init();
         </script>
-</html>
-    </body>
-    <script type="module">
+        <script type="module">
             // 导入transfer
-            import transferWebview from '../src/index.js';
+            import transferWebview from '../es/index.js';
 
             // 定义数据传输实现方法(以flutter环境为例)
             const transferImpl = (data) => {
@@ -142,4 +140,5 @@
             };
                         document.getElementById('sendBasicMessageBtn').addEventListener('click', sendBasicMessage);
         </script>
+    </body>
 </html>
